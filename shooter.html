@@ -5,10 +5,28 @@
     <script src="sprite.js"></script>
   </head>
   <body>
-    <h1 align="center">Space Shooter</h1>
+    <h1>Space Shooter</h1>
     <canvas id="canvas" width="1580" height="500"></canvas>
     <script type="text/javascript">
       var tela = document.getElementsByTagName("canvas")[0];
       var ctx = tela.getContext("2d");
+      var dt = anterior = 0;
+
+      function limpaTela()
+      {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0, tela.width, tela.height);
+      }
+
+      function passo(t)
+      {
+        dt = (t - anterior)/1000;
+        limpaTela();
+        anterior = t;
+        requestAnimationFrame(passo);
+      }
+
+      requestAnimationFrame(passo);
+
     </script>
   </body>
