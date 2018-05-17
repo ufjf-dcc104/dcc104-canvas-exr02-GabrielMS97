@@ -6,11 +6,15 @@
   </head>
   <body>
     <h1>Space Shooter</h1>
-    <canvas id="canvas" width="1580" height="500"></canvas>
+    <canvas id="canvas" width="500" height="500"></canvas>
     <script type="text/javascript">
       var tela = document.getElementsByTagName("canvas")[0];
       var ctx = tela.getContext("2d");
       var dt = anterior = 0;
+      var sprites = [];
+      var pc = new Sprite();
+      pc.cdTiro = 0;
+      sprites.push(pc);
 
       function limpaTela()
       {
@@ -22,6 +26,9 @@
       {
         dt = (t - anterior)/1000;
         limpaTela();
+        for (var i = 0; i < sprites.length; i++) {
+          sprites[i].desenhar(ctx);
+        }
         anterior = t;
         requestAnimationFrame(passo);
       }
