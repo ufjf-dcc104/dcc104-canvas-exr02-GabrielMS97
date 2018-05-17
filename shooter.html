@@ -28,6 +28,7 @@
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].mover(dt);
           pc.cdTiro = pc.cdTiro - dt ;
+          sprites[i].impoeLimites(0,0, tela.width, tela.height);
         }
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {

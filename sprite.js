@@ -43,3 +43,26 @@ Sprite.prototype.mover = function(dt) {
   this.x = this.x + this.vx*dt;
   this.y = this.y + this.vy*dt;
 }
+
+Sprite.prototype.impoeLimites = function (x, y, w, h) {
+  if(this.x < x)
+  {
+    this.x = x;
+    this.vx = 0;
+  }
+  if(this.x + this.larg > x + w)
+  {
+    this.x = x + w - this.larg;
+    this.vx = 0;
+  }
+  if(this.y < y)
+  {
+    this.y = y;
+    this.vy = 0;
+  }
+  if(this.y + this.alt > y + h)
+  {
+    this.y = y + h - this.alt;
+    this.vy = 0;
+  }
+}
