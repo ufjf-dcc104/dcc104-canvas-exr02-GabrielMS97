@@ -38,3 +38,8 @@ Sprite.prototype.desenhar = function(ctx) {
   }
   ctx.restore();
 }
+
+Sprite.prototype.mover = function(dt) {
+  this.x = this.x + this.vx*dt;
+  this.y = this.y + this.vy*dt;
+}

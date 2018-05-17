@@ -25,6 +25,10 @@
       function passo(t)
       {
         dt = (t - anterior)/1000;
+        for (var i = 0; i < sprites.length; i++) {
+          sprites[i].mover(dt);
+          pc.cdTiro = pc.cdTiro - dt ;
+        }
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].desenhar(ctx);
@@ -34,6 +38,29 @@
       }
 
       requestAnimationFrame(passo);
+
+      addEventListener("keydown", function(e)
+      {
+          switch (e.keyCode) {
+          case 37:
+            pc.vx = -200;
+            e.preventDefault();
+            break;
+          case 39:
+            pc.vx = 200;
+            e.preventDefault();
+            break;
+          }
+      });
+
+      addEventListener("keyup", function(e)
+      {
+          if (e.keyCode === 37 || e.keyCode === 39)
+          {
+            pc.vx = 0;
+            e.preventDefault();
+          }
+      });
 
     </script>
   </body>
