@@ -13,6 +13,7 @@
       var dt = anterior = 0;
       var sprites = [];
       var inimigos = [];
+      var tiros = [];
       var quantInimigos = 10;
       var pc = new Sprite();
       pc.cdTiro = 0;
@@ -42,12 +43,18 @@
         for (var i = 0; i < inimigos.length; i++) {
           inimigos[i].moverInimigos(dt);
         }
+        for (var i = 0; i < tiros.length; i++) {
+          tiros[i].mover(dt);
+        }
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].desenhar(ctx);
         }
         for (var i = 0; i < inimigos.length; i++) {
           inimigos[i].desenharInimigo(ctx);
+        }
+        for (var i = 0; i < tiros.length; i++) {
+          tiros[i].desenhar(ctx);
         }
         anterior = t;
         requestAnimationFrame(passo);
@@ -65,6 +72,20 @@
           case 39:
             pc.vx = 250;
             e.preventDefault();
+            break;
+          case 32:
+            var tiro = new Sprite();
+            if(pc.cdTiro <= 0)
+            {
+              tiro.x = pc.x;
+              tiro.y = pc.y;
+              tiro.larg = 5;
+              tiro.alt = 5;
+              tiro.cor = "yellow";
+              tiro.vy = -500;
+              tiros.push(tiro);
+              pc.cdTiro = 0.5;
+            }
             break;
           }
       });
