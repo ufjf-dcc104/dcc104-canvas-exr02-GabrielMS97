@@ -12,9 +12,17 @@
       var ctx = tela.getContext("2d");
       var dt = anterior = 0;
       var sprites = [];
+      var inimigos = [];
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
+
+      for(var e = 0; e < 10; e++) {
+        var enemy = new Sprite();
+        enemy.ex = 500-550*Math.random();;
+        //enemy.ey = 100-200*Math.random();;
+        inimigos.push(enemy);
+      }
 
       function limpaTela()
       {
@@ -33,6 +41,9 @@
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].desenhar(ctx);
+        }
+        for (var i = 0; i < inimigos.length; i++) {
+          inimigos[i].desenharInimigo(ctx);
         }
         anterior = t;
         requestAnimationFrame(passo);
