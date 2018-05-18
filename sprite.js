@@ -83,7 +83,6 @@ Sprite.prototype.moverInimigos = function(dt) {
   this.ey = this.ey + this.evy*dt;
 }
 
-
 Sprite.prototype.impoeLimites = function (x, y, w, h) {
   if(this.x < x)
   {
@@ -105,4 +104,24 @@ Sprite.prototype.impoeLimites = function (x, y, w, h) {
     this.y = y + h - this.alt;
     this.vy = 0;
   }
+}
+
+Sprite.prototype.acertou = function (alvo)
+{
+  if (alvo.ex + alvo.elarg < this.x) return false;
+  if (alvo.ex > this.x + this.larg) return false;
+  if (alvo.ey + alvo.ealt < this.y) return false;
+  if (alvo.ey > this.y + this.alt) return false;
+
+  return true;
+}
+
+Sprite.prototype.colidiuCom = function (alvo) {
+  if (alvo.x + alvo.larg < this.ex) return false;
+  if (alvo.x > this.ex + this.elarg) return false;
+  if (alvo.y + alvo.alt < this.ey) return false;
+  if (alvo.y > this.ey + this.ealt) return false;
+
+  return true;
+
 }

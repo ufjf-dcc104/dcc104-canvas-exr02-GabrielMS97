@@ -42,9 +42,19 @@
         }
         for (var i = 0; i < inimigos.length; i++) {
           inimigos[i].moverInimigos(dt);
+          if(inimigos[i].colidiuCom(pc))
+          {
+            pc.cor = "red";
+          }
         }
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].mover(dt);
+          for (var j = 0; j < inimigos.length; j++) {
+            if(tiros[i].acertou(inimigos[j]))
+            {
+              inimigos[j].ecor = "white";
+            }
+          }
         }
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {
