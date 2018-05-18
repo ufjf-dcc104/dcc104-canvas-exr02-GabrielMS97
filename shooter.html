@@ -15,6 +15,9 @@
       var inimigos = [];
       var tiros = [];
       var quantInimigos = 10;
+      var energia = 5;
+      var dano = false;
+      var pontos = 0;
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
@@ -30,6 +33,10 @@
       {
         ctx.fillStyle = "black";
         ctx.fillRect(0,0, tela.width, tela.height);
+        ctx.font="20px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText("Energia: " + energia, 10,20);
+        ctx.fillText("Pontos: " + pontos/2, 10,50);
       }
 
       function passo(t)
@@ -45,7 +52,13 @@
           if(inimigos[i].colidiuCom(pc))
           {
             pc.cor = "red";
+            dano = true;
           }
+        }
+        if(dano)
+        {
+          energia = energia - 1;
+          dano = false;
         }
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].mover(dt);
@@ -53,6 +66,7 @@
             if(tiros[i].acertou(inimigos[j]))
             {
               inimigos[j].ecor = "white";
+              pontos++;
             }
           }
         }
