@@ -13,14 +13,15 @@
       var dt = anterior = 0;
       var sprites = [];
       var inimigos = [];
+      var quantInimigos = 10;
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
 
-      for(var e = 0; e < 10; e++) {
+      for(var e = 0; e < quantInimigos; e++) {
         var enemy = new Sprite();
         enemy.ex = 500-550*Math.random();;
-        //enemy.ey = 100-200*Math.random();;
+        enemy.ey = 100-600*Math.random();;
         inimigos.push(enemy);
       }
 
@@ -37,6 +38,9 @@
           sprites[i].mover(dt);
           pc.cdTiro = pc.cdTiro - dt ;
           sprites[i].impoeLimites(0,0, tela.width, tela.height);
+        }
+        for (var i = 0; i < inimigos.length; i++) {
+          inimigos[i].moverInimigos(dt);
         }
         limpaTela();
         for (var i = 0; i < sprites.length; i++) {
@@ -55,11 +59,11 @@
       {
           switch (e.keyCode) {
           case 37:
-            pc.vx = -200;
+            pc.vx = -250;
             e.preventDefault();
             break;
           case 39:
-            pc.vx = 200;
+            pc.vx = 250;
             e.preventDefault();
             break;
           }

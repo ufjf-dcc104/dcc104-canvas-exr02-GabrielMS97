@@ -17,7 +17,7 @@ function Sprite() {
   this.elarg = 20;
   this.ealt = 20;
   this.evx = 0;
-  this.evy = 0;
+  this.evy = 250;
   this.eax = 0;
   this.eay = 0;
   this.ecor = "#DC143C";
@@ -77,6 +77,12 @@ Sprite.prototype.mover = function(dt) {
   this.x = this.x + this.vx*dt;
   this.y = this.y + this.vy*dt;
 }
+
+Sprite.prototype.moverInimigos = function(dt) {
+  //this.ex = this.ex + this.evx*dt;
+  this.ey = this.ey + this.evy*dt;
+}
+
 
 Sprite.prototype.impoeLimites = function (x, y, w, h) {
   if(this.x < x)
