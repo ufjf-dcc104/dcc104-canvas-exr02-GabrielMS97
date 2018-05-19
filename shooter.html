@@ -51,6 +51,12 @@
       function passo(t)
       {
         dt = (t - anterior)/1000;
+        for (var i = 0; i < inimigos.length; i++) {
+          if (inimigos[i].limiteInimigos(0,0, tela.width, tela.height)) {
+            inimigos[i].ey = getRandomIntInclusive(-600, -200);
+            inimigos[i].ex = getRandomIntInclusive(20, 480);
+          }
+        }
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].mover(dt);
           pc.cdTiro = pc.cdTiro - dt ;
@@ -64,14 +70,8 @@
             inimigos[i].ey = getRandomIntInclusive(-600, -200);
             inimigos[i].ex = getRandomIntInclusive(20, 480);
             energia--;
-            //dano = true;
           }
         }
-        /*if(dano)
-        {
-          energia = energia - 1;
-          dano = false;
-        }*/
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].mover(dt);
           for (var j = 0; j < inimigos.length; j++) {
