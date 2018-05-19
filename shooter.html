@@ -24,8 +24,8 @@
 
       for(var e = 0; e < quantInimigos; e++) {
         var enemy = new Sprite();
-        enemy.ex = 500-550*Math.random();;
-        enemy.ey = 100-600*Math.random();;
+        enemy.ex = 500-550*Math.random();
+        enemy.ey = 100-600*Math.random();
         inimigos.push(enemy);
       }
 
@@ -36,7 +36,7 @@
         ctx.font="20px Arial";
         ctx.fillStyle = "white";
         ctx.fillText("Energia: " + energia, 10,20);
-        ctx.fillText("Pontos: " + pontos/2, 10,50);
+        ctx.fillText("Pontos: " + pontos, 10,50);
       }
 
       function passo(t)
@@ -51,21 +51,26 @@
           inimigos[i].moverInimigos(dt);
           if(inimigos[i].colidiuCom(pc))
           {
-            pc.cor = "red";
-            dano = true;
+            //pc.cor = "red";
+            inimigos[i].ey = 100-600*Math.random();
+            inimigos[i].ex = 500-550*Math.random();
+            energia--;
+            //dano = true;
           }
         }
-        if(dano)
+        /*if(dano)
         {
           energia = energia - 1;
           dano = false;
-        }
+        }*/
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].mover(dt);
           for (var j = 0; j < inimigos.length; j++) {
             if(tiros[i].acertou(inimigos[j]))
             {
-              inimigos[j].ecor = "white";
+              //inimigos[j].ecor = "white";
+              inimigos[j].ey = 100-600*Math.random();
+              inimigos[j].ex = 500-550*Math.random();
               pontos++;
             }
           }
