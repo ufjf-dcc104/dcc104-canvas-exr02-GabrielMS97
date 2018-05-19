@@ -18,6 +18,7 @@
       var energia = 5;
       var dano = false;
       var pontos = 0;
+      var aumentarQuant = 0;
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
@@ -26,7 +27,7 @@
       for(var e = 0; e < quantInimigos; e++) {
         var enemy = new Sprite();
         enemy.ex = getRandomIntInclusive(20, 480);
-        enemy.ey = getRandomIntInclusive(-600, -200);
+        enemy.ey = getRandomIntInclusive(-1000, -200);
         inimigos.push(enemy);
       }
 
@@ -51,40 +52,58 @@
       function passo(t)
       {
         dt = (t - anterior)/1000;
+        //Verifica se os inimigos sairam da tela 
         for (var i = 0; i < inimigos.length; i++) {
           if (inimigos[i].limiteInimigos(0,0, tela.width, tela.height)) {
-            inimigos[i].ey = getRandomIntInclusive(-600, -200);
+            inimigos[i].ey = getRandomIntInclusive(-1000, -200);
             inimigos[i].ex = getRandomIntInclusive(20, 480);
+            inimigos[i].evy += 5;
           }
         }
+        //Movimenta o sprite principal e impõe limites
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].mover(dt);
           pc.cdTiro = pc.cdTiro - dt ;
           sprites[i].impoeLimites(0,0, tela.width, tela.height);
         }
+        //Movimenta os inimigos e verifica se houve colisão com o sprite principal
         for (var i = 0; i < inimigos.length; i++) {
           inimigos[i].moverInimigos(dt);
           if(inimigos[i].colidiuCom(pc))
           {
             //pc.cor = "red";
-            inimigos[i].ey = getRandomIntInclusive(-600, -200);
+            inimigos[i].ey = getRandomIntInclusive(-1000, -200);
             inimigos[i].ex = getRandomIntInclusive(20, 480);
             energia--;
           }
         }
+        //Movimenta os tiros e verifica se acertou em algum inimigo
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].mover(dt);
           for (var j = 0; j < inimigos.length; j++) {
             if(tiros[i].acertou(inimigos[j]))
             {
               //inimigos[j].ecor = "white";
-              inimigos[j].ey = getRandomIntInclusive(-600, -200);
+              inimigos[j].ey = getRandomIntInclusive(-1000, -200);
               inimigos[j].ex = getRandomIntInclusive(20, 480);
               pontos++;
+              //Aumenta a quantidade de inimigos a cada 10 pontos
+              if(aumentarQuant < 10)
+              {
+                aumentarQuant++;
+              }
+              else {
+                aumentarQuant = 0;
+                var enemy = new Sprite();
+                enemy.ex = getRandomIntInclusive(20, 480);
+                enemy.ey = getRandomIntInclusive(-1000, -200);
+                inimigos.push(enemy);
+              }
             }
           }
         }
         limpaTela();
+        //Desenha os sprites
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].desenhar(ctx);
         }
