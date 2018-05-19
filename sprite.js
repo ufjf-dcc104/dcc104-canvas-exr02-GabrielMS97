@@ -125,3 +125,24 @@ Sprite.prototype.colidiuCom = function (alvo) {
   return true;
 
 }
+
+Sprite.prototype.limiteInimigos = function (x, y, w, h) {
+  if(this.x + this.larg > x + w)
+  {
+    //this.x = x + w - this.larg;
+    this.ey = 100-600*Math.random();
+    this.ex = 500-550*Math.random();
+  }
+  if(this.y < y)
+  {
+    //this.y = y;
+    this.ey = 100-600*Math.random();
+    this.ex = 500-550*Math.random();
+  }
+  if(this.y + this.alt > y + h)
+  {
+    //this.y = y + h - this.alt;
+    this.ey = 100-600*Math.random();
+    this.ex = 500-550*Math.random();
+  }
+}

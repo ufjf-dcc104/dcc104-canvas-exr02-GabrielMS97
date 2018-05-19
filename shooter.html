@@ -22,13 +22,15 @@
       pc.cdTiro = 0;
       sprites.push(pc);
 
+      //Desenha os inimigos iniciais
       for(var e = 0; e < quantInimigos; e++) {
         var enemy = new Sprite();
-        enemy.ex = 500-550*Math.random();
-        enemy.ey = 100-600*Math.random();
+        enemy.ex = getRandomIntInclusive(20, 480);
+        enemy.ey = getRandomIntInclusive(-600, -200);
         inimigos.push(enemy);
       }
 
+      //Função que desenha a tela
       function limpaTela()
       {
         ctx.fillStyle = "black";
@@ -37,6 +39,13 @@
         ctx.fillStyle = "white";
         ctx.fillText("Energia: " + energia, 10,20);
         ctx.fillText("Pontos: " + pontos, 10,50);
+      }
+
+      //Função que gera aleatoriedade
+      function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
       function passo(t)
@@ -52,8 +61,8 @@
           if(inimigos[i].colidiuCom(pc))
           {
             //pc.cor = "red";
-            inimigos[i].ey = 100-600*Math.random();
-            inimigos[i].ex = 500-550*Math.random();
+            inimigos[i].ey = getRandomIntInclusive(-600, -200);
+            inimigos[i].ex = getRandomIntInclusive(20, 480);
             energia--;
             //dano = true;
           }
@@ -69,8 +78,8 @@
             if(tiros[i].acertou(inimigos[j]))
             {
               //inimigos[j].ecor = "white";
-              inimigos[j].ey = 100-600*Math.random();
-              inimigos[j].ex = 500-550*Math.random();
+              inimigos[j].ey = getRandomIntInclusive(-600, -200);
+              inimigos[j].ex = getRandomIntInclusive(20, 480);
               pontos++;
             }
           }
