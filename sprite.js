@@ -23,6 +23,9 @@ function Sprite() {
   this.ecor = "#DC143C";
   this.eang = 90;
   this.eQuant = 0;
+
+  //Sprite vida
+  this.corVida = "#00FF00";
 }
 
 Sprite.prototype.desenhar = function(ctx) {
@@ -51,6 +54,30 @@ Sprite.prototype.desenhar = function(ctx) {
 
 Sprite.prototype.desenharInimigo = function(ctx) {
   ctx.fillStyle = this.ecor;
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 3;
+  ctx.save();
+  ctx.translate(this.ex, this.ey);
+  ctx.rotate(this.eang*Math.PI/180);
+  ctx.beginPath();
+  ctx.moveTo(-this.elarg/2, -this.ealt/2);
+  ctx.lineTo(-this.elarg/2, +this.ealt/2);
+  ctx.lineTo(+this.elarg/2 + 10, 0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+  if(this.debug)
+  {
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(-this.elarg/2, -this.ealt/2, this.elarg, this.ealt);
+  }
+  ctx.restore();
+}
+
+Sprite.prototype.desenharVida = function(ctx) {
+  ctx.fillStyle = this.corVida;
   ctx.strokeStyle = "white";
   ctx.lineWidth = 3;
   ctx.save();

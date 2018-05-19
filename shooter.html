@@ -14,6 +14,7 @@
       var sprites = [];
       var inimigos = [];
       var tiros = [];
+      var vida = [];
       var quantInimigos = 10;
       var energia = 5;
       var dano = false;
@@ -30,6 +31,11 @@
         enemy.ey = getRandomIntInclusive(-1000, -200);
         inimigos.push(enemy);
       }
+
+      var life = new Sprite();
+      life.ex = getRandomIntInclusive(20, 480);
+      life.ey = getRandomIntInclusive(-10000, -5000);
+      vida.push(life);
 
       //Função que desenha a tela
       function limpaTela()
@@ -52,12 +58,19 @@
       function passo(t)
       {
         dt = (t - anterior)/1000;
-        //Verifica se os inimigos sairam da tela 
+        //Verifica se os inimigos sairam da tela
         for (var i = 0; i < inimigos.length; i++) {
           if (inimigos[i].limiteInimigos(0,0, tela.width, tela.height)) {
             inimigos[i].ey = getRandomIntInclusive(-1000, -200);
             inimigos[i].ex = getRandomIntInclusive(20, 480);
             inimigos[i].evy += 5;
+          }
+        }
+        //Verifica se a vida saiu da tela
+        for (var i = 0; i < vida.length; i++) {
+          if (vida[i].limiteInimigos(0,0, tela.width, tela.height)) {
+            vida[i].ey = getRandomIntInclusive(-10000, -5000);
+            vida[i].ex = getRandomIntInclusive(20, 480);
           }
         }
         //Movimenta o sprite principal e impõe limites
@@ -102,6 +115,16 @@
             }
           }
         }
+        //Movimenta o sprite vida e verifica colisões
+        for (var i = 0; i < vida.length; i++) {
+          vida[i].moverInimigos(dt);
+          if(vida[i].colidiuCom(pc))
+          {
+            vida[i].ey = getRandomIntInclusive(-10000, -5000);
+            vida[i].ex = getRandomIntInclusive(20, 480);
+            energia++;
+          }
+        }
         limpaTela();
         //Desenha os sprites
         for (var i = 0; i < sprites.length; i++) {
@@ -112,6 +135,9 @@
         }
         for (var i = 0; i < tiros.length; i++) {
           tiros[i].desenhar(ctx);
+        }
+        for (var i = 0; i < vida.length; i++) {
+          vida[i].desenharVida(ctx);
         }
         anterior = t;
         requestAnimationFrame(passo);
