@@ -58,6 +58,13 @@
       function passo(t)
       {
         dt = (t - anterior)/1000;
+        //Verifica se a energia acabou e chama o Game Over
+        if (energia <= 0) {
+          ctx.fillStyle = "red";
+          ctx.font = "Bold 70px Arial";
+          ctx.fillText("GAME OVER", canvas.width / 16, canvas.height / 2 + 20);
+          return;
+        }
         //Verifica se os inimigos sairam da tela
         for (var i = 0; i < inimigos.length; i++) {
           if (inimigos[i].limiteInimigos(0,0, tela.width, tela.height)) {
