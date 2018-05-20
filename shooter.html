@@ -3,6 +3,7 @@
     <meta charset="utf-8">
     <title>Space Shooter</title>
     <script src="sprite.js"></script>
+    <script src="ImageLibrary.js"></script>
   </head>
   <body>
     <h1>Space Shooter</h1>
@@ -11,6 +12,8 @@
       var tela = document.getElementsByTagName("canvas")[0];
       var ctx = tela.getContext("2d");
       var dt = anterior = 0;
+
+      //Variavéis dos Sprites
       var sprites = [];
       var inimigos = [];
       var tiros = [];
@@ -23,6 +26,10 @@
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
+
+      //Variáveis das imagens
+      var imagens = new ImageLibrary();
+      imagens.load("espaço", "espaço.jpg");
 
       //Desenha os inimigos iniciais
       for(var e = 0; e < quantInimigos; e++) {
@@ -43,6 +50,7 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0,0, tela.width, tela.height);
         ctx.font="20px Arial";
+        imagens.draw(ctx,"espaço", 0, 0);
         ctx.fillStyle = "white";
         ctx.fillText("Energia: " + energia, 10,20);
         ctx.fillText("Pontos: " + pontos, 10,50);
