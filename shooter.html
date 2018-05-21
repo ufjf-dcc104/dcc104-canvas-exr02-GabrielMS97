@@ -23,13 +23,17 @@
       var dano = false;
       var pontos = 0;
       var aumentarQuant = 0;
+      var cadencia = 0.5;
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
 
       //Variáveis das imagens
       var imagens = new ImageLibrary();
-      imagens.load("espaço", "espaço.jpg");
+      imagens.load("espaço", "imagens/espaço.jpg");
+      imagens.load("principal", "imagens/principal.png");
+      imagens.load("vida", "imagens/vida.png");
+      imagens.load("inimigo1", "imagens/inimigo1.png");
 
       //Desenha os inimigos iniciais
       for(var e = 0; e < quantInimigos; e++) {
@@ -143,16 +147,16 @@
         limpaTela();
         //Desenha os sprites
         for (var i = 0; i < sprites.length; i++) {
-          sprites[i].desenhar(ctx);
+          sprites[i].desenhar(ctx,imagens.images["principal"]);
         }
         for (var i = 0; i < inimigos.length; i++) {
-          inimigos[i].desenharInimigo(ctx);
+          inimigos[i].desenharInimigo(ctx, imagens.images["inimigo1"]);
         }
         for (var i = 0; i < tiros.length; i++) {
-          tiros[i].desenhar(ctx);
+          tiros[i].desenharTiro(ctx);
         }
         for (var i = 0; i < vida.length; i++) {
-          vida[i].desenharVida(ctx);
+          vida[i].desenharVida(ctx, imagens.images["vida"]);
         }
         anterior = t;
         requestAnimationFrame(passo);
@@ -182,7 +186,7 @@
               tiro.cor = "yellow";
               tiro.vy = -500;
               tiros.push(tiro);
-              pc.cdTiro = 0.5;
+              pc.cdTiro = cadencia;
             }
             break;
           }

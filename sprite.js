@@ -2,8 +2,8 @@ function Sprite() {
   //Sprite principal
   this.x = 245;
   this.y = 450;
-  this.larg = 20;
-  this.alt = 20;
+  this.larg = 32;
+  this.alt = 32;
   this.vx = 0;
   this.vy = 0;
   this.ax = 0;
@@ -14,8 +14,8 @@ function Sprite() {
   //Sprites inimigos
   this.ex = 100;
   this.ey = 0;
-  this.elarg = 20;
-  this.ealt = 20;
+  this.elarg = 32;
+  this.ealt = 32;
   this.evx = 0;
   this.evy = 250;
   this.eax = 0;
@@ -28,32 +28,19 @@ function Sprite() {
   this.corVida = "#00FF00";
 }
 
-Sprite.prototype.desenhar = function(ctx) {
-  ctx.fillStyle = this.cor;
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 3;
-  ctx.save();
-  ctx.translate(this.x, this.y);
-  ctx.rotate(this.ang*Math.PI/180);
-  ctx.beginPath();
-  ctx.moveTo(-this.larg/2, -this.alt/2);
-  ctx.lineTo(-this.larg/2, +this.alt/2);
-  ctx.lineTo(+this.larg/2 + 10, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  if(this.debug)
-  {
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(-this.larg/2, -this.alt/2, this.larg, this.alt);
-  }
-  ctx.restore();
+Sprite.prototype.desenhar = function(ctx, key) {
+  //ctx.fillStyle = this.cor;
+  //ctx.fillRect(this.x,this.y, this.larg, this.alt);
+  ctx.drawImage(key, this.x, this.y);
 }
 
-Sprite.prototype.desenharInimigo = function(ctx) {
-  ctx.fillStyle = this.ecor;
+Sprite.prototype.desenharTiro = function(ctx, key) {
+  ctx.fillStyle = "yellow";
+  ctx.fillRect(this.x + 14,this.y, 5, 20);
+}
+
+Sprite.prototype.desenharInimigo = function(ctx, key) {
+  /*ctx.fillStyle = this.ecor;
   ctx.strokeStyle = "white";
   ctx.lineWidth = 3;
   ctx.save();
@@ -73,11 +60,13 @@ Sprite.prototype.desenharInimigo = function(ctx) {
     ctx.lineWidth = 3;
     ctx.strokeRect(-this.elarg/2, -this.ealt/2, this.elarg, this.ealt);
   }
-  ctx.restore();
+  ctx.restore();*/
+  ctx.drawImage(key, this.ex, this.ey);
 }
 
-Sprite.prototype.desenharVida = function(ctx) {
-  ctx.fillStyle = this.corVida;
+Sprite.prototype.desenharVida = function(ctx, key) {
+  ctx.drawImage(key, this.ex, this.ey);
+  /*ctx.fillStyle = this.corVida;
   ctx.strokeStyle = "white";
   ctx.lineWidth = 3;
   ctx.save();
@@ -97,7 +86,7 @@ Sprite.prototype.desenharVida = function(ctx) {
     ctx.lineWidth = 3;
     ctx.strokeRect(-this.elarg/2, -this.ealt/2, this.elarg, this.ealt);
   }
-  ctx.restore();
+  ctx.restore();*/
 }
 
 Sprite.prototype.mover = function(dt) {
@@ -135,8 +124,8 @@ Sprite.prototype.impoeLimites = function (x, y, w, h) {
 
 Sprite.prototype.acertou = function (alvo)
 {
-  if (alvo.ex + alvo.elarg < this.x) return false;
-  if (alvo.ex > this.x + this.larg) return false;
+  if (alvo.ex + alvo.elarg < this.x + 15) return false;
+  if (alvo.ex > this.x + 15 + this.larg) return false;
   if (alvo.ey + alvo.ealt < this.y) return false;
   if (alvo.ey > this.y + this.alt) return false;
 
