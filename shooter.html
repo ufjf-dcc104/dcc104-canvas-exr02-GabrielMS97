@@ -92,6 +92,14 @@
             vida[i].ex = getRandomIntInclusive(20, 480);
           }
         }
+        //Verifica de o tiro saiu da Tela
+        for (var i = 0; i < tiros.length; i++) {
+          if(tiros[i].limiteTiros(0,0,tela.width,tela.height)){
+            tiros[i].vy = 0;
+            tiros[i].x = 900;
+            tiros[i].y = 900;
+          }
+        }
         //Movimenta o sprite principal e impõe limites
         for (var i = 0; i < sprites.length; i++) {
           sprites[i].mover(dt);
@@ -119,6 +127,9 @@
               inimigos[j].ey = getRandomIntInclusive(-1000, -200);
               inimigos[j].ex = getRandomIntInclusive(20, 480);
               pontos++;
+              tiros[i].vy = 0;
+              tiros[i].y = 900;
+              tiros[i].x = 900;
               //Aumenta a quantidade de inimigos a cada 10 pontos
               if(aumentarQuant < 10)
               {

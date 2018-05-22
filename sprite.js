@@ -17,7 +17,7 @@ function Sprite() {
   this.elarg = 32;
   this.ealt = 32;
   this.evx = 0;
-  this.evy = 250;
+  this.evy = 200;
   this.eax = 0;
   this.eay = 0;
   this.ecor = "#DC143C";
@@ -147,4 +147,8 @@ Sprite.prototype.limiteInimigos = function (x, y, w, h) {
   {
     return true;
   }
+}
+
+Sprite.prototype.limiteTiros = function (x, y, w, h) {
+  if(this.y < -100 ) return true;
 }
