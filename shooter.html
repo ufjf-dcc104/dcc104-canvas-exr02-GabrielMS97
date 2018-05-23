@@ -23,7 +23,10 @@
       var dano = false;
       var pontos = 0;
       var aumentarQuant = 0;
+      var velocidadeSpritesBonus = 200;
       var cadencia = 0.5;
+      var corTiro = "yellow";
+      var tiroEsp = false;
       var pc = new Sprite();
       pc.cdTiro = 0;
       sprites.push(pc);
@@ -34,8 +37,9 @@
       imagens.load("principal", "imagens/principal.png");
       imagens.load("vida", "imagens/vida.png");
       imagens.load("inimigo1", "imagens/inimigo1.png");
+      imagens.load("tiro-especial", "imagens/especial1.png");
 
-      //Desenha os inimigos iniciais
+      //Cria os inimigos iniciais
       for(var e = 0; e < quantInimigos; e++) {
         var enemy = new Sprite();
         enemy.ex = getRandomIntInclusive(20, 480);
@@ -43,10 +47,17 @@
         inimigos.push(enemy);
       }
 
+      //Cria a vida
       var life = new Sprite();
       life.ex = getRandomIntInclusive(20, 480);
       life.ey = getRandomIntInclusive(-10000, -5000);
       vida.push(life);
+
+      //Cria o sprite de tiro tiroEspecial
+      var esp = new Sprite();
+      esp.ex = getRandomIntInclusive(20, 480);
+      esp.ey = getRandomIntInclusive(-15000, -9000);
+      esp.evy = velocidadeSpritesBonus;
 
       //Função que desenha a tela
       function limpaTela()
@@ -92,6 +103,13 @@
             vida[i].ex = getRandomIntInclusive(20, 480);
           }
         }
+        //Verifica se o sprite de tiro especial saiu da tela
+        for (var i = 0; i < esp.length; i++) {
+          if (esp.limiteInimigos(0,0, tela.width, tela.height)) {
+            esp.ey = getRandomIntInclusive(-15000, -9000);
+            esp.ex = getRandomIntInclusive(20, 480);
+          }
+        }
         //Verifica de o tiro saiu da Tela
         for (var i = 0; i < tiros.length; i++) {
           if(tiros[i].limiteTiros(0,0,tela.width,tela.height)){
@@ -111,7 +129,6 @@
           inimigos[i].moverInimigos(dt);
           if(inimigos[i].colidiuCom(pc))
           {
-            //pc.cor = "red";
             inimigos[i].ey = getRandomIntInclusive(-1000, -200);
             inimigos[i].ex = getRandomIntInclusive(20, 480);
             energia--;
@@ -123,13 +140,15 @@
           for (var j = 0; j < inimigos.length; j++) {
             if(tiros[i].acertou(inimigos[j]))
             {
-              //inimigos[j].ecor = "white";
               inimigos[j].ey = getRandomIntInclusive(-1000, -200);
               inimigos[j].ex = getRandomIntInclusive(20, 480);
               pontos++;
-              tiros[i].vy = 0;
-              tiros[i].y = 900;
-              tiros[i].x = 900;
+              if(tiroEsp == false)
+              {
+                tiros[i].vy = 0;
+                tiros[i].y = 900;
+                tiros[i].x = 900;
+              }
               //Aumenta a quantidade de inimigos a cada 10 pontos
               if(aumentarQuant < 10)
               {
@@ -155,6 +174,15 @@
             energia++;
           }
         }
+        //Movimenta o sprite de tiro especial e verifica colisão
+        esp.moverInimigos(dt);
+        if(esp.colidiuCom(pc))
+        {
+          esp.ey = getRandomIntInclusive(-15000, -9000);
+          esp.ex = getRandomIntInclusive(20, 480);
+          corTiro = "#00FFFF";
+          tiroEsp = true;
+        }
         limpaTela();
         //Desenha os sprites
         for (var i = 0; i < sprites.length; i++) {
@@ -168,7 +196,10 @@
         }
         for (var i = 0; i < vida.length; i++) {
           vida[i].desenharVida(ctx, imagens.images["vida"]);
+          vida[i].evy = velocidadeSpritesBonus;
         }
+        esp.desenharEspecialTiro(ctx, imagens.images["tiro-especial"]);
+
         anterior = t;
         requestAnimationFrame(passo);
       }
@@ -194,7 +225,7 @@
               tiro.y = pc.y;
               tiro.larg = 5;
               tiro.alt = 5;
-              tiro.cor = "yellow";
+              tiro.cor = corTiro;
               tiro.vy = -500;
               tiros.push(tiro);
               pc.cdTiro = cadencia;

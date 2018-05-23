@@ -21,6 +21,7 @@ function Sprite() {
   this.eax = 0;
   this.eay = 0;
   this.ecor = "#DC143C";
+  this.corTiro = "yellow";
   this.eang = 90;
   this.eQuant = 0;
 
@@ -35,58 +36,22 @@ Sprite.prototype.desenhar = function(ctx, key) {
 }
 
 Sprite.prototype.desenharTiro = function(ctx, key) {
-  ctx.fillStyle = "yellow";
+  ctx.fillStyle = this.cor;
   ctx.fillRect(this.x + 14,this.y, 5, 20);
 }
 
 Sprite.prototype.desenharInimigo = function(ctx, key) {
-  /*ctx.fillStyle = this.ecor;
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 3;
-  ctx.save();
-  ctx.translate(this.ex, this.ey);
-  ctx.rotate(this.eang*Math.PI/180);
-  ctx.beginPath();
-  ctx.moveTo(-this.elarg/2, -this.ealt/2);
-  ctx.lineTo(-this.elarg/2, +this.ealt/2);
-  ctx.lineTo(+this.elarg/2 + 10, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  if(this.debug)
-  {
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(-this.elarg/2, -this.ealt/2, this.elarg, this.ealt);
-  }
-  ctx.restore();*/
   ctx.drawImage(key, this.ex, this.ey);
 }
 
 Sprite.prototype.desenharVida = function(ctx, key) {
   ctx.drawImage(key, this.ex, this.ey);
-  /*ctx.fillStyle = this.corVida;
-  ctx.strokeStyle = "white";
-  ctx.lineWidth = 3;
-  ctx.save();
-  ctx.translate(this.ex, this.ey);
-  ctx.rotate(this.eang*Math.PI/180);
-  ctx.beginPath();
-  ctx.moveTo(-this.elarg/2, -this.ealt/2);
-  ctx.lineTo(-this.elarg/2, +this.ealt/2);
-  ctx.lineTo(+this.elarg/2 + 10, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.restore();
-  if(this.debug)
-  {
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(-this.elarg/2, -this.ealt/2, this.elarg, this.ealt);
-  }
-  ctx.restore();*/
+}
+
+Sprite.prototype.desenharEspecialTiro = function(ctx, key) {
+  //ctx.fillStyle = "yellow";
+  //ctx.fillRect(this.ex,this.ey, 20, 20);
+  ctx.drawImage(key, this.ex, this.ey);
 }
 
 Sprite.prototype.mover = function(dt) {
@@ -95,7 +60,6 @@ Sprite.prototype.mover = function(dt) {
 }
 
 Sprite.prototype.moverInimigos = function(dt) {
-  //this.ex = this.ex + this.evx*dt;
   this.ey = this.ey + this.evy*dt;
 }
 
