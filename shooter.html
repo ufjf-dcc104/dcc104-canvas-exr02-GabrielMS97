@@ -4,6 +4,7 @@
     <title>Space Shooter</title>
     <script src="sprite.js"></script>
     <script src="ImageLibrary.js"></script>
+    <script src="AudioLibrary.js"></script>
   </head>
   <body>
     <h1>Space Shooter</h1>
@@ -38,6 +39,13 @@
       imagens.load("vida", "imagens/vida.png");
       imagens.load("inimigo1", "imagens/inimigo1.png");
       imagens.load("tiro-especial", "imagens/especial1.png");
+
+      //Variáveis dos sons
+      var audios = new AudioLibrary();
+      audios.load("tiro1", "sons/laser1.mp3");
+      audios.load("tiro2", "sons/laser2.wav");
+      audios.load("explosion", "sons/explosão-final.wav");
+      audios.load("bonus", "sons/bonus.wav");
 
       //Cria os inimigos iniciais
       for(var e = 0; e < quantInimigos; e++) {
@@ -83,6 +91,7 @@
         dt = (t - anterior)/1000;
         //Verifica se a energia acabou e chama o Game Over
         if (energia <= 0) {
+          audios.play("explosion");
           ctx.fillStyle = "red";
           ctx.font = "Bold 70px Arial";
           ctx.fillText("GAME OVER", canvas.width / 16, canvas.height / 2 + 20);
@@ -110,7 +119,7 @@
             esp.ex = getRandomIntInclusive(20, 480);
           }
         }
-        //Verifica de o tiro saiu da Tela
+        //Verifica se o tiro saiu da Tela
         for (var i = 0; i < tiros.length; i++) {
           if(tiros[i].limiteTiros(0,0,tela.width,tela.height)){
             tiros[i].vy = 0;
@@ -169,6 +178,7 @@
           vida[i].moverInimigos(dt);
           if(vida[i].colidiuCom(pc))
           {
+            audios.play("bonus");
             vida[i].ey = getRandomIntInclusive(-10000, -5000);
             vida[i].ex = getRandomIntInclusive(20, 480);
             energia++;
@@ -178,6 +188,7 @@
         esp.moverInimigos(dt);
         if(esp.colidiuCom(pc))
         {
+          audios.play("bonus");
           esp.ey = getRandomIntInclusive(-15000, -9000);
           esp.ex = getRandomIntInclusive(20, 480);
           corTiro = "#00FFFF";
@@ -229,6 +240,13 @@
               tiro.vy = -500;
               tiros.push(tiro);
               pc.cdTiro = cadencia;
+              if(tiroEsp)
+              {
+                audios.play("tiro2");
+              }
+              else {
+                audios.play("tiro1");
+              }
             }
             break;
           }
